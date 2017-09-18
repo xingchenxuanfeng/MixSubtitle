@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mTips.setText("如果软件无效的话，请尝试打开手机自带的下载管理的设置，然后关闭使用迅雷等下载引擎的选项，再删除已下载的视频重新下载。"
                 + "\n有任何疑问可点此反馈" +
                 "\nhttps://github.com/xingchenxuanfeng/FlowLayout/issues/new");
+        requestWebTips();
         if (!isAppInstalled(getApplicationContext(), COURSERA_PACKAGENAME)) {
             mBtn.setEnabled(false);
             Toast.makeText(getApplicationContext(), "您没有安装 coursera", Toast.LENGTH_LONG).show();
@@ -86,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void requestWebTips() {
+        new GetTipsAsyncTask().execute();
     }
 
 
@@ -268,6 +273,21 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
             return null;
+        }
+    }
+
+    private class GetTipsAsyncTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            return Web.getTips(MainActivity.this.getString(R.string.url_tips));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (!s.isEmpty()) {
+                mTips.setText(s);
+            }
         }
     }
 

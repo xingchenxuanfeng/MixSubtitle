@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mix Subtitle</string>
+    <string name="url_tips">https://raw.githubusercontent.com/xingchenxuanfeng/MixSubtitle/master/tips/tips</string>
 </resources>
